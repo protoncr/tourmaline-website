@@ -2,7 +2,6 @@ module.exports = {
   docs: {
     About: [
       'about/why-tourmaline',
-      'about/the-crystal-language',
     ],
     Cookbook: [
       'cookbook/your-first-bot',

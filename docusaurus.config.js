@@ -6,12 +6,16 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'watzon', // Usually your GitHub org/user name.
   projectName: 'protoncr', // Usually your repo name.
+  plugins: ['@docusaurus/plugin-google-analytics'],
   themeConfig: {
     sidebarCollapsible: false,
     prism: {
       theme: require('prism-react-renderer/themes/github'),
       darkTheme: require('prism-react-renderer/themes/palenight'),
       // additionalLanguages: ['crystal']
+    },
+    googleAnalytics: {
+      trackingID: 'UA-163181710-1',
     },
     navbar: {
       title: 'Tourmaline',
