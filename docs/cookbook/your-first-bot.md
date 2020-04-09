@@ -34,11 +34,11 @@ At the top of the file import tourmaline with a `require` statement.
 require "tourmaline"
 ```
 
-You should now have access to all the Tourmaline goodness within your project. Now we need to create our `EchoBot` class and extend the `Tourmaline::Bot` class with it. Below the require statement enter the following:
+You should now have access to all the Tourmaline goodness within your project. Now we need to create our `EchoBot` class and extend the `Tourmaline::Client` class with it. Below the require statement enter the following:
 
 ```crystal
-class EchoBot < Tourmaline::Bot
-  
+class EchoBot < Tourmaline::Client
+
 end
 ```
 
@@ -66,7 +66,7 @@ Ok, now it's time to make our bot do something. Inside of the `EchoBot` class en
 
 ```crystal
 @[Tourmaline::Command("echo")]
-def echo_command(ctx : Tourmaline::Context)
+def echo_command(ctx : Tourmaline::CommandContext)
   ctx.message.respond(ctx.text)
 end
 ```
@@ -74,7 +74,7 @@ end
 What's happening here?! It's pretty simple actually.
 
 - First we use the `Tourmaline::Command` annotation to register the command we're going to create. The name of this command is `echo`.
-- We create a method called `echo_command` which receives a [`Tourmaline::Context`](https://watzon.github.io/tourmaline/Tourmaline/Context.html) object as a parameter.
+- We create a method called `echo_command` which receives a [`Tourmaline::CommandContext`](https://api.tourmaline.dev/Tourmaline/CommandContext.html) object as a parameter.
 - Inside the `echo_command` method we use the `respond` method that exists on `Message` objects to respond with the same text that was sent.
 
 Let's run our bot again and try it out. On the terminal once again run `crystal run ./src/echo_bot.cr`. You should see the same message as before. Now in Telegram open up a private chat with your bot and send the message `/echo this is coming from tourmaline`, or anything else you want.
@@ -86,9 +86,9 @@ If something is going wrong, this is what the completed bot code should look lik
 ```crystal
 require "tourmaline"
 
-class EchoBot < Tourmaline::Bot
+class EchoBot < Tourmaline::Client
   @[Tourmaline::Command("echo")]
-  def echo_command(ctx : Tourmaline::Context)
+  def echo_command(ctx : Tourmaline::CommandContext)
     ctx.message.respond(ctx.text)
   end
 end
