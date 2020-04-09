@@ -12,7 +12,7 @@ module.exports = {
     prism: {
       theme: require('prism-react-renderer/themes/github'),
       darkTheme: require('prism-react-renderer/themes/palenight'),
-      // additionalLanguages: ['crystal']
+      additionalLanguages: ['ruby', 'crystal']
     },
     googleAnalytics: {
       trackingID: 'UA-163181710-1',
@@ -107,7 +107,7 @@ module.exports = {
         docs: {
           path: 'docs',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/protoncr/tourmaline-website/',
+          editUrl: 'https://github.com/protoncr/tourmaline-website/tree/master',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
