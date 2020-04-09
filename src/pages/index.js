@@ -32,7 +32,7 @@ const features = [
     imageUrl: 'img/undraw_open_source.svg',
     description: (
       <>
-        The Tourmaline source code is hosted on Gihub, licensed using the MIT licence, and
+        The Tourmaline source code is hosted on Github, licensed using the MIT license, and
         is freely available for you to view, modify, and use in your own projects.
       </>
     ),
