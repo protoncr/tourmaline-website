@@ -6,7 +6,16 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'watzon', // Usually your GitHub org/user name.
   projectName: 'protoncr', // Usually your repo name.
-  plugins: ['@docusaurus/plugin-google-analytics'],
+  plugins: [
+    '@docusaurus/plugin-google-analytics',
+    '@docusaurus/plugin-ideal-image',
+      {
+        quality: 70,
+        max: 1030, // max resized image's size.
+        min: 640, // min resized image's size. if original is lower, use that size.
+        steps: 2, // the max number of images generated between min and max (inclusive)
+      },
+  ],
   themeConfig: {
     sidebarCollapsible: false,
     prism: {
@@ -48,6 +57,7 @@ module.exports = {
           label: 'GitHub',
           position: 'right',
         },
+        {to: 'showcase', label: 'Showcase', position: 'left'}
       ],
     },
     footer: {

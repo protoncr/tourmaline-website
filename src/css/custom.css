@@ -18,6 +18,8 @@
   --ifm-footer-background-color: #303846;
   --ifm-hero-background-color: #303846;
 
+  --ifm-global-shadow-lw: 3px 4px 2px 0 rgba(0, 0, 0, 0.1), -2px -3px 5px 0 rgba(0, 0, 0, 0.1);
+
   --ifm-code-font-size: 95%;
 }
 
