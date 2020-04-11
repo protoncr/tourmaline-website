@@ -15,6 +15,7 @@
     "@docusaurus/preset-classic": "^2.0.0-alpha.50",
     "@docusaurus/theme-live-codeblock": "^2.0.0-alpha.39",
     "classnames": "^2.2.6",
+    "disqus-react": "^1.0.8",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
