@@ -122,6 +122,14 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        blog: {
+          feedOptions: {
+            type: 'all',
+            title: 'Tourmaline',
+            decription: 'Blog for the Tourmaline Telegram bot API library',
+            copyright: `Copyright © ${new Date().getFullYear()} Watzon Development`
+          },
+        }
       },
     ],
   ],
