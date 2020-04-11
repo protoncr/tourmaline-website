@@ -18,12 +18,14 @@ REPLY_MARKUP = Tourmaline::Model::ReplyKeyboardMarkup.new([
 ])
 
 @[Command(["start", "help"])]
-def help_command(message, params)
-  message.chat.send_message("😺 Use commands: /kitty and /kittygif", reply_markup: REPLY_MARKUP)
+def help_command(client, update)
+  if message = update.message
+    message.reply("😺 Use commands: /kitty, /kittygif and /about", reply_markup: REPLY_MARKUP)
+  end
 end
 ```
 
-You should end up with a keyboard that looks like this:
+You'll end up with a keyboard that looks like this:
 
 ![kitty reply keyboard](https://i.imgur.com/AHfTaBv.png)
 
@@ -37,8 +39,10 @@ REPLY_MARKUP = Markup.buttons([
 ]).keyboard
 
 @[Command(["start", "help"])]
-def help_command(message, params)
-  message.chat.send_message("😺 Use commands: /kitty and /kittygif", reply_markup: REPLY_MARKUP)
+def help_command(client, update)
+  if message = update.message
+    message.reply("😺 Use commands: /kitty, /kittygif and /about", reply_markup: REPLY_MARKUP)
+  end
 end
 ```
 
@@ -55,21 +59,27 @@ REPLY_MARKUP = Markup.inline_buttons([
 ]).inline_keyboard
 
 @[Command(["start", "help"])]
-def help_command(message, params)
-  message.chat.send_message("😺 Choose an option below", reply_markup: REPLY_MARKUP)
+def help_command(client, update)
+  if message = update.message
+    message.reply("😺 Use commands: /kitty, /kittygif and /about", reply_markup: REPLY_MARKUP)
+  end
 end
 
-@[OnCallbackQuery]
-def kitty_command(ctx)
-  # The time hack is to get around Telegram's image cache
-  api = API_URL + "?time=#{Time.utc.to_unix}&format=src&type="
+@[On(:callback_query)]
+def kitty_command(client, update)
+  if message = update.message
+    # The time hack is to get around Telegram's image cache
+    api = API_URL + "?time=#{Time.utc}&format=src&type="
 
-  ctx.chat.send_chat_action(:upload_photo)
-  case ctx.data
-  when "pic"
-    ctx.respond_with_photo(api + "jpg")
-  when "gif"
-    ctx.respond_with_document(api + "gif")
+    case update.context["command"].as_s
+    when "kitty"
+      message.chat.send_chat_action(:upload_photo)
+      message.chat.send_photo(api + "jpg")
+    when "kittygif"
+      message.chat.send_chat_action(:upload_photo)
+      message.chat.send_animation(api + "gif")
+    else
+    end
   end
 end
 ```

@@ -7,10 +7,8 @@ module.exports = {
       'cookbook/your-first-bot',
       {
         Basics: [
-          'cookbook/basics/handlers',
-          'cookbook/basics/commands',
-          'cookbook/basics/pattern-matching',
-          'cookbook/basics/listening-for-events'
+          'cookbook/basics/handling-events',
+          'cookbook/basics/filters',
         ],
         API: [
           'cookbook/api/webhooks',

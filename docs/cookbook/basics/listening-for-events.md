@@ -1,25 +1,46 @@
 ---
-id: listening-for-events
-title: Listening for Events
+id: handling-events
+title: Handling Events
 ---
 
 ### Intro
 
-Tourmaline provides event listeners which are fired every time one of several [`UpdateAction`](https://watzon.github.io/tourmaline/Tourmaline/UpdateAction.html)'s is fired.
+Tourmaline provides event handlers which are fired every time one of several [`UpdateAction`](https://watzon.github.io/tourmaline/Tourmaline/UpdateAction.html)'s is fired.
 
-### Event Listener Annotation
+### The On Annotation
 
-Like commands, it's possible to annotate a method with an `On` annotation to designate that method as an event listener.`On` accepts any of the `UpdateAction`'s as an argument (although you can use symbols as well) and passes in an `EventContext` every time that update is seen.
-
-As an example, let's listen for text messages and print them to the console:
+Tourmaline comes with a special annotation called `On` which accepts two parameters. The first is the event itself, which can be an `UpdateAction`, or a Symbol/String that resolves to an `UpdateAction`. The second, optional parameter is a [`Filter`]() which we'll go over later. Basic usage of the `On` annotation should look something like this:
 
 ```crystal
-@[On(:text)]
-def text_listener(ctx : EventHandler)
-  if message = ctx.message
-    logger.debug("Text: #{message.text}")
-  end
+@[On(:message)]
+def on_message(client, update)
+  # This will be called every time there is a message
 end
 ```
 
-As with the `Command` annotation, the `On` annotation also has a handler counterpart in the  `EventHandler`, which works in much the same way.
+Annotations can also be stacked if you want to handle multiple events with the same method:
+
+```crystal
+@[On(:photo)]
+@[On(:video)]
+def on_photo_video(client, update)
+  # This will be called when there's a photo or video
+end
+```
+
+### Without an Annotation
+
+You can also add event handlers without an annotation. Here's how:
+
+```crystal
+class MyBot < Tourmaline::Client
+  # ...
+end
+
+bot = MyBot.new(ENV["API_KEY"])
+bot.add_event_handler(:message) do |client, update|
+  # This will be called every time there is a message
+end
+```
+
+This can be useful if you need to add event handlers somewhat dynamically.

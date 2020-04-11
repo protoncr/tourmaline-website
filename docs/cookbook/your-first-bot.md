@@ -11,7 +11,7 @@ Creating a telegram bot can be a fun experience, but underdeveloped, poorly docu
 
 ### Creating Your First Bot
 
-> Before getting started here please read up on [Telegram Bots](https://core.telegram.org/bots) and follow the instructions required to make your own bot. You will need a API key from `@botfather` on Telegram before you can make a working bot.
+> Before getting started here please read up on [Telegram Bots](https://core.telegram.org/bots) and follow the instructions required to make your own bot. You will need a API key from [@BotFather](https://t.me/botfather) on Telegram before you can make a working bot.
 
 The first thing you need to do is set up a new Crystal project. This can be done by typing `crystal init app [project-name]` into your terminal and hitting enter. For the sake of this project we're going to assume your `project-name` is echo_bot.
 
@@ -20,7 +20,8 @@ Open the project folder `echo_bot` in your favorite text editor and then open th
 ```yaml
 dependencies:
   tourmaline:
-    github: watzon/tourmaline
+    github: protoncr/tourmaline
+    version: 0.16.0
     branch: master
 ```
 
@@ -65,31 +66,39 @@ in your console after a few seconds. Since we haven't defined any commands your 
 Ok, now it's time to make our bot do something. Inside of the `EchoBot` class enter the following code (I'll explain what it does):
 
 ```crystal
-@[Tourmaline::Command("echo")]
-def echo_command(ctx : Tourmaline::CommandContext)
-  ctx.message.respond(ctx.text)
+@[Command("echo")]
+def echo_command(client, update)
+  if message = update.message
+    text = update.context["text"].as_s
+    message.respond(text)
+  end
 end
 ```
 
 What's happening here?! It's pretty simple actually.
 
-- First we use the `Tourmaline::Command` annotation to register the command we're going to create. The name of this command is `echo`.
-- We create a method called `echo_command` which receives a [`Tourmaline::CommandContext`](https://api.tourmaline.dev/Tourmaline/CommandContext.html) object as a parameter.
-- Inside the `echo_command` method we use the `respond` method that exists on `Message` objects to respond with the same text that was sent.
+- First we use the `Command` annotation to register the command we're going to create. The name of this command is `echo`.
+- We create a method called `echo_command` which accepts a [`Client`](https://api.tourmaline.dev/Tourmaline/Client.html) and an [`Update`](https://api.tourmaline.dev/Tourmaline/Update.html) object.
+- Inside the `echo_command` method we first have to use a _guard clause_ to make sure `update.message` exists. This is a limitation of Crystal and something I hope to fix in the future.
+- Inside of the guard clause we first get the `"text"` item from the `UpdateContext`. We'll talk more about the `UpdateContext later.
+- Lastly we use `message.respond` to echo the text back at the user. Since `"text"` is the raw text without the command, all we echo back is the text that came after the command.
 
 Let's run our bot again and try it out. On the terminal once again run `crystal run ./src/echo_bot.cr`. You should see the same message as before. Now in Telegram open up a private chat with your bot and send the message `/echo this is coming from tourmaline`, or anything else you want.
 
 The bot should send the message right back to you.
 
-If something is going wrong, this is what the completed bot code should look like:
+Just in case, this is what your final code should look like:
 
 ```crystal
 require "tourmaline"
 
 class EchoBot < Tourmaline::Client
-  @[Tourmaline::Command("echo")]
-  def echo_command(ctx : Tourmaline::CommandContext)
-    ctx.message.respond(ctx.text)
+  @[Command("echo")]
+  def echo_command(client, update)
+    if message = update.message
+      text = update.context["text"].as_s
+      message.respond(text)
+    end
   end
 end
 
