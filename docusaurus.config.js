@@ -26,6 +26,11 @@ module.exports = {
     googleAnalytics: {
       trackingID: 'UA-163181710-1',
     },
+    algolia: {
+      apiKey: '255fde0e682635329578898793210e18',
+      indexName: 'tourmaline',
+      algoliaOptions: {}, // Optional, if provided by Algolia
+    },
     navbar: {
       title: 'Tourmaline',
       hideOnScroll: true,
