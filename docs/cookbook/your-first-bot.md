@@ -21,7 +21,6 @@ Open the project folder `echo_bot` in your favorite text editor and then open th
 dependencies:
   tourmaline:
     github: protoncr/tourmaline
-    version: 0.16.0
     branch: master
 ```
 
