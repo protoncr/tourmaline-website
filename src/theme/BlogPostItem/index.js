@@ -65,7 +65,7 @@ function BlogPostItem(props) {
             {month} {day}, {year}
           </time>
 
-          <span className='margin-left--sm margin-right--sm'>&bull;</span>
+          {/* <span className='margin-left--sm margin-right--sm'>&bull;</span>
 
           <CommentCount
               shortname='tourmaline-dev'
@@ -76,7 +76,7 @@ function BlogPostItem(props) {
                   title: title,
                 }
               }
-          />
+          /> */}
         </div>
         <div className="avatar margin-vert--md">
           {authorImageURL && (
