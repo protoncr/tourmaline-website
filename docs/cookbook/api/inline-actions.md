@@ -9,12 +9,12 @@ In Telegram there are some bots capable of performing what are known as "inline 
 
 ### Answering Inline Queries
 
-Inline queries are like any other event and can be listened for using the `EventHandler` and it's `On` annotation, or eventually, using the `OnInlineQuery` annotation.
+Inline queries are like any other event and can be listened for using the `UpdateHandler` and it's `On` annotation, or the `OnInlineQuery` annotation.
 
 ```crystal
-@[On(:inline_query)]
-def on_inline_query(client, update)
-  results = QueryResultBuilder.build do |builder|
+@[OnInlineQuery]
+def on_inline_query(ctx)
+  results = InlineQueryResult.build do |builder|
     builder.article(
       id: "query",
       title: "Inline title",
@@ -23,10 +23,11 @@ def on_inline_query(client, update)
     )
   end
 
-  update.inline_query.try &.answer(results)
+  ctx.query.answer(results)
 end
 ```
 
-The result set can contain any [`InlineQueryResult`](https://watzon.github.io/tourmaline/Tourmaline/InlineQueryResult.html)s. The `input_message_content` is what gets sent upon one of the items being clicked.
+As you can see here, the `OnInlineQuery` annotation can be used directly to handle inline queries. It's preferred over just using the `On` annotation for a couple reasons:
 
-Soon there will be filters specific to inline queries as well, so keep posted.
+- Methods annotated with `OnInlineQuery` receive an [`InlineQueryHandler::Context`](https://api.tourmaline.dev/Tourmaline/InlineQueryHandler/Context.html) rather than a plain `Update`. This includes direct access to the query and more.
+- `OnInlineQuery` accepts a `String` or `Regex` as an optional parameter. If included this will be used to match the received query and the generated `Regex::MatchData` will be passed to the context.

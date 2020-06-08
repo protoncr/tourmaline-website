@@ -6,14 +6,11 @@ module.exports = {
     Cookbook: [
       'cookbook/your-first-bot',
       {
-        Basics: [
-          'cookbook/basics/handling-events',
-          'cookbook/basics/filters',
-        ],
         API: [
+          'cookbook/api/handlers',
           'cookbook/api/webhooks',
           'cookbook/api/inline-actions',
-          'cookbook/api/reply-keyboards',
+          'cookbook/api/keyboards',
           'cookbook/api/games',
           'cookbook/api/stickers',
           'cookbook/api/payments'
@@ -24,6 +21,10 @@ module.exports = {
             label: 'Video Tutorials',
             href: 'https://www.youtube.com/channel/UCq9HhcH4BQ960b-fo3TdIAw'
           },
+          'cookbook/extras/multilevel-menus',
+          'cookbook/extras/paginated-keyboards',
+          'cookbook/extras/background-jobs',
+          'cookbook/extras/stage',
           'cookbook/extras/kemal-middleware',
           'cookbook/extras/emoji-support'
         ]

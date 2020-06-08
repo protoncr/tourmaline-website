@@ -57,7 +57,7 @@ In case it wasn't obvious, replace `YOUR_BOT_API_KEY` with the bot api key given
 Now go to your terminal and run `crystal run ./src/echo_bot.cr`. If all goes well you should see the message
 
 ```
-[INFO   ] - Polling for updates
+[Info   ] [tourmaline.client.core_methods] - Polling for updates
 ```
 
 in your console after a few seconds. Since we haven't defined any commands your bot won't be able to do anything, but it's online. If you get some kind of error instead pleas go back through the steps and see if you did anything wrong.
@@ -66,21 +66,16 @@ Ok, now it's time to make our bot do something. Inside of the `EchoBot` class en
 
 ```crystal
 @[Command("echo")]
-def echo_command(client, update)
-  if message = update.message
-    text = update.context["text"].as_s
-    message.respond(text)
-  end
+def echo_command(ctx)
+    ctx.message.respond(ctx.text)
 end
 ```
 
 What's happening here?! It's pretty simple actually.
 
 - First we use the `Command` annotation to register the command we're going to create. The name of this command is `echo`.
-- We create a method called `echo_command` which accepts a [`Client`](https://api.tourmaline.dev/Tourmaline/Client.html) and an [`Update`](https://api.tourmaline.dev/Tourmaline/Update.html) object.
-- Inside the `echo_command` method we first have to use a _guard clause_ to make sure `update.message` exists. This is a limitation of Crystal and something I hope to fix in the future.
-- Inside of the guard clause we first get the `"text"` item from the `UpdateContext`. We'll talk more about the `UpdateContext later.
-- Lastly we use `message.respond` to echo the text back at the user. Since `"text"` is the raw text without the command, all we echo back is the text that came after the command.
+- We create a method called `echo_command` which accepts a [`CommandHandler::Context`](https://api.tourmaline.dev/Tourmaline/CommandHandler/Context.html) object. The context object contains a reference to the `Message`, the message's text (without the command), and more.
+- Lastly we use `ctx.message.respond` to echo the text back at the user. Since `ctx.text` is the raw text without the command, all we echo back is the text that came after the command.
 
 Let's run our bot again and try it out. On the terminal once again run `crystal run ./src/echo_bot.cr`. You should see the same message as before. Now in Telegram open up a private chat with your bot and send the message `/echo this is coming from tourmaline`, or anything else you want.
 
@@ -93,11 +88,8 @@ require "tourmaline"
 
 class EchoBot < Tourmaline::Client
   @[Command("echo")]
-  def echo_command(client, update)
-    if message = update.message
-      text = update.context["text"].as_s
-      message.respond(text)
-    end
+  def echo_command(ctx)
+    ctx.message.respond(ctx.text)
   end
 end
 
